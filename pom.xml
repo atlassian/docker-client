@@ -3,23 +3,17 @@
 
   <groupId>com.spotify</groupId>
   <artifactId>docker-client</artifactId>
-  <version>4.0.1-SNAPSHOT</version>
+  <version>4.0.1-atlassian-1-SNAPSHOT</version>
   <packaging>jar</packaging>
   <name>docker-client</name>
   <description>A docker client</description>
-  <url>https://github.com/spotify/docker-client</url>
+  <url>https://github.com/atlassian/docker-client</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <autoReleaseAfterClose>true</autoReleaseAfterClose>
   </properties>
-
-  <parent>
-    <groupId>org.sonatype.oss</groupId>
-    <artifactId>oss-parent</artifactId>
-    <version>9</version>
-  </parent>
 
   <licenses>
     <license>
@@ -30,16 +24,20 @@
   </licenses>
 
   <scm>
-    <connection>scm:git:https://github.com/spotify/docker-client</connection>
-    <developerConnection>scm:git:git@github.com:spotify/docker-client</developerConnection>
-    <url>https://github.com/spotify/docker-client</url>
+    <connection>scm:git:https://github.com/atlassian/docker-client</connection>
+    <developerConnection>scm:git:git@github.com:atlassian/docker-client</developerConnection>
+    <url>https://github.com/atlassian/docker-client</url>
     <tag>HEAD</tag>
   </scm>
 
   <distributionManagement>
+    <repository>
+      <id>atlassian-3rdparty</id>
+      <url>https://maven.atlassian.com/3rdparty</url>
+    </repository>
     <snapshotRepository>
-      <id>ossrh</id>
-      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+      <id>atlassian-3rdparty-snapshot</id>
+      <url>https://maven.atlassian.com/3rdparty-snapshot</url>
     </snapshotRepository>
   </distributionManagement>
 
@@ -362,17 +360,6 @@
         </executions>
       </plugin>
       <plugin>
-        <groupId>org.sonatype.plugins</groupId>
-        <artifactId>nexus-staging-maven-plugin</artifactId>
-        <version>1.6.5</version>
-        <extensions>true</extensions>
-        <configuration>
-          <serverId>ossrh</serverId>
-          <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-          <autoReleaseAfterClose>${autoReleaseAfterClose}</autoReleaseAfterClose>
-        </configuration>
-      </plugin>
-      <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
         <version>0.7.5.201505241946</version>
@@ -413,4 +400,16 @@
       </plugin>
     </plugins>
   </reporting>
+
+  <profiles>
+    <profile>
+      <id>releaseProfile</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <properties>
+        <skipTests>true</skipTests>
+      </properties>
+    </profile>
+  </profiles>
 </project>
